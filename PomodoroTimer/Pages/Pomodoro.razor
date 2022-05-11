@@ -1,0 +1,167 @@
+﻿@inject IJSRuntime _jsRuntime;
+@inject PomodoroService _pomodoroService;
+
+<audio id="section-done-sound" src="../sounds/mixkit-happy-bells-notification-937.wav" />
+
+<div class="h-full flex flex-col justify-center items-center">
+    <ul class="flex flex-row">
+        @foreach(var pomSection in _pomodoroService.Sections)
+        {
+            if (pomSection.Type == SectionType.Work)
+            {
+                if (pomSection.State == SectionState.Inactive)
+                {
+                    <li class="w-[70px] h-[32px] border-2 border-black"></li>
+                }
+                else if(pomSection.State == SectionState.Active)
+                {
+                    <li class="w-[70px] h-[32px] border-2 border-black bg-yellow-400"></li>
+                }
+                else
+                {
+                    <li class="w-[70px] h-[32px] border-2 border-black bg-red-400"></li>
+                }
+            }
+            else if(pomSection.Type == SectionType.Break)
+            {
+                if (pomSection.State == SectionState.Inactive)
+                {
+                    <li class="w-[14px] h-[32px] border-2 border-black"></li>
+                }
+                else if(pomSection.State == SectionState.Active)
+                {
+                    <li class="w-[14px] h-[32px] border-2 border-black bg-yellow-400"></li>
+                }
+                else
+                {
+                    <li class="w-[14px] h-[32px] border-2 border-black bg-blue-400"></li>
+                }
+            }
+            else
+            {
+                if (pomSection.State == SectionState.Inactive)
+                {
+                    <li class="w-[42px] h-[32px] border-2 border-black"></li>
+                }
+                else if(pomSection.State == SectionState.Active)
+                {
+                    <li class="w-[42px] h-[32px] border-2 border-black bg-yellow-400"></li>
+                }
+                else
+                {
+                    <li class="w-[42px] h-[32px] border-2 border-black bg-blue-400"></li>
+                }
+            }
+        }
+    </ul>
+    <h1 class="m-5 text-5xl">@(_pomodoroService.Elapsed.ToString(@"mm\:ss"))</h1>
+    <div class = "flex flex-row justify-center items-center">
+        <button class="text-gray-900 active:text-gray-400" @onclick="Start">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64px" height="64px">
+                <title>Start</title>
+                <path
+                    d="M238.23 342.43l89.09-74.13a16 16 0 000-24.6l-89.09-74.13A16 16 0 00212 181.86v148.28a16 16 0 0026.23 12.29z"
+                    fill="currentColor"/>
+                <path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-miterlimit="10"
+                    stroke-width="32"/>
+            </svg>
+        </button>
+        <button class="text-gray-900 active:text-gray-400" @onclick="Pause">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64px" height="64px">
+                <title>Pause</title>
+                <path
+                    d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-miterlimit="10"
+                    stroke-width="32"/>
+                <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="32"
+                    d="M208 192v128M304 192v128"/>
+            </svg>
+        </button>
+        <button class="text-gray-900 active:text-gray-400" @onclick="Skip">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="64px" height="64px">
+                <title>Skip</title>
+                <path
+                    d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-miterlimit="10"
+                    stroke-width="32"/>
+                <path
+                    d="M320 176a16 16 0 00-16 16v53l-111.68-67.44a10.78 10.78 0 00-16.32 9.31v138.26a10.78 10.78 0 0016.32 9.31L304 267v53a16 16 0 0032 0V192a16 16 0 00-16-16z"
+                    fill="currentColor"/>
+            </svg>
+        </button>
+        <button class="text-gray-900 active:text-gray-400" @onclick="Reset">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64px" height="64px">
+                <title>Reset</title>
+                <path d="M288 193s12.18-6-32-6a80 80 0 1080 80"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="28"/>
+                <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="28"
+                    d="M256 149l40 40-40 40"/>
+                <path
+                    d="M256 64C150 64 64 150 64 256s86 192 192 192 192-86 192-192S362 64 256 64z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-miterlimit="10"
+                    stroke-width="32"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _pomodoroService.Progress += async () =>
+        {
+            await InvokeAsync(StateHasChanged);
+        };
+
+        _pomodoroService.EndInterval += async () =>
+        {
+            await _jsRuntime.InvokeAsync<string>("PlayAudio", "section-done-sound");
+            await  InvokeAsync(StateHasChanged);
+        };
+    }
+
+    public void Start()
+    {
+        _pomodoroService.Start();
+    }
+
+    public void Pause()
+    {
+        _pomodoroService.Pause();
+    }
+
+    public void Skip()
+    {
+        _pomodoroService.Skip();
+    }
+
+    public void Reset()
+    {
+        _pomodoroService.Reset();
+    }
+}
