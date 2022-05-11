@@ -30,7 +30,7 @@ jobs:
       
       # Publishes Blazor project to the release-folder
       - name: Publishes Blazor project to the release-folder
-        run: dotnet publish PomodoroTimer.csproj -c Release -o release --nologo
+        run: dotnet publish ./PomodoroTimer/PomodoroTimer.csproj -c Release -o release --nologo
 
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.3
