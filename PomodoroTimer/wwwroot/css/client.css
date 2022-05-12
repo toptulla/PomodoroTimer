@@ -488,24 +488,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 100vh;
 }
 
-.w-\[70px\] {
-  width: 70px;
+.w-\[45px\] {
+  width: 45px;
 }
 
 .w-\[14px\] {
   width: 14px;
 }
 
-.w-\[42px\] {
-  width: 42px;
-}
-
-.w-\[45px\] {
-  width: 45px;
-}
-
 .w-\[30px\] {
   width: 30px;
+}
+
+.w-\[46px\] {
+  width: 46px;
 }
 
 .flex-row {
