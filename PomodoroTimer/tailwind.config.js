@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: 'class',
   content: ["./{Pages,Shared}/**/*.{razor,html}"],
   theme: {
       extend: {},
