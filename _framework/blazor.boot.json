@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "Microsoft.AspNetCore.Components.dll": "sha256-eTt5cYp3rUI3g+9ecq4eaHx1bW88MTOrxHM9CSPPf+4=",
+      "Microsoft.AspNetCore.Components.dll": "sha256-Z7ngQ6gsEPCzK\/UicCbbCU0ACUYmr4vjUyOkP3HleV0=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-WYWVHC6H8qVy8A5bAjdH7BLSrl0kzNZ621qr0qoA2CM=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-qLRev3iQ8+ob2712HwRtFUJchqBHMqm+gr9bbFz7t14=",
       "Microsoft.Extensions.Configuration.Abstractions.dll": "sha256-zhFtW4kE16TdrpPne9I1Cu9o0KYzrS50VE9MVSifJg4=",
@@ -21,7 +21,7 @@
       "Microsoft.Extensions.Primitives.dll": "sha256-YColTWA58whC+8aBjv1O7HgsyYrbHTba601EkNDWAlo=",
       "Microsoft.JSInterop.dll": "sha256-qAkdW9lpOxuToI9wOq2Liu3mqceR2fdv+cVOAwBcNqU=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-\/t0kGPO3Nt2TXo3rZz7S7wLoXxNakPKcEBdbVyyFlWo=",
-      "PomodoroTimer.dll": "sha256-Eka\/85XqW0S6xDOHZTfZMzbr4FaqRx2HqL\/mwzguSxY=",
+      "PomodoroTimer.dll": "sha256-Kf8KMmb1nwulREIWays7ay+Vza9KtIacTxj8hZeNCN0=",
       "System.Collections.Concurrent.dll": "sha256-hGhgu\/OS\/8+hJZ6imA9Og15rFiJ++eaGKY+K1Nc6tWc=",
       "System.Collections.dll": "sha256-K7gc5Abi5IWqw6eILawCtFm8KdV12iTab1+IZsz4iOg=",
       "System.ComponentModel.dll": "sha256-xPl13TsFTPZZhDa4WyYTkzfZSBm0UXve\/NnDagg5oDs=",
@@ -36,7 +36,7 @@
       "System.Private.Runtime.InteropServices.JavaScript.dll": "sha256-Tx7OAfWiCZmQYcqbAIqudUSsYH1FNC6E73mVzvdL1Mc=",
       "System.Private.Uri.dll": "sha256-edRHr6VHvmyPxFQZ6Fn1XS\/pKT1N4VWEo\/6+Mfe0Ivc=",
       "System.Runtime.CompilerServices.Unsafe.dll": "sha256-3jnPxBda2nhaRyaPmdM6MLzMcar8slYE9QCZRTpsswQ=",
-      "System.Runtime.dll": "sha256-qzR1WOI\/9rUNjQUwE+yJ\/IlhEURpsXmNH29mssj7ldU=",
+      "System.Runtime.dll": "sha256-9z1b8gOBUuycYg5zaDRwZG6esrBSkblog0rCFXipJzU=",
       "System.Text.Encodings.Web.dll": "sha256-YzMdXtB4qiVZw\/kTy0U8HXrPcvrzgfxm8px4fV0aEm4=",
       "System.Text.Json.dll": "sha256-IoGOmRtjGaRm2RD4NYyfHhPC6+wJJbuWHGgkDAN46HY=",
       "System.Threading.dll": "sha256-iDXASNAQWqF9UgZJH5yvYgok5NKEhGtDtG8\/mnAQyuw="
