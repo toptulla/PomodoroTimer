@@ -1,4 +1,6 @@
-﻿namespace PomodoroTimer
+﻿using PomodoroTimer.Common;
+
+namespace PomodoroTimer
 {
     public class Section
     {

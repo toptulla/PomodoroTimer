@@ -1,4 +1,4 @@
-﻿namespace PomodoroTimer
+﻿namespace PomodoroTimer.Common
 {
     public enum SectionType
     {

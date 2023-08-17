@@ -1,23 +1,33 @@
-﻿using Timer = System.Timers.Timer;
+﻿using PomodoroTimer.Common;
+using PomodoroTimer.Services;
+using Timer = System.Timers.Timer;
 
 namespace PomodoroTimer
 {
-    public class PomodoroService : IDisposable
+    public class PomodoroService : IPomodoroService, IDisposable
     {
         private readonly Timer timer = new(1000);
         private TimeSpan elapsed = TimeSpan.Zero;
         private readonly Section[] sections;
+        private readonly IStatService statService;
         private int sectionIndex;
 
-        public PomodoroService(Section[] sections)
+        public PomodoroService(IStatService statService)
         {
-            this.sections = sections;
+            sections = new[]
+            {
+                new Section(TimeSpan.FromMinutes(25), SectionType.Work),
+                new Section(TimeSpan.FromMinutes(5), SectionType.Break),
+                new Section(TimeSpan.FromMinutes(25), SectionType.Work),
+                new Section(TimeSpan.FromMinutes(5), SectionType.Break),
+                new Section(TimeSpan.FromMinutes(25), SectionType.Work),
+                new Section(TimeSpan.FromMinutes(5), SectionType.Break),
+                new Section(TimeSpan.FromMinutes(25), SectionType.Work),
+                new Section(TimeSpan.FromMinutes(15), SectionType.LongBreak)
+            };
             timer.Elapsed += OnTimerElapsed;
+            this.statService = statService;
         }
-
-        public int SectionsCount => sections.Length;
-
-        public int CurrentSection => sectionIndex;
 
         public TimeSpan Elapsed => sections[sectionIndex].Time - elapsed;
 
@@ -27,16 +37,27 @@ namespace PomodoroTimer
 
         public event Func<Task>? EndInterval;
 
-        public void Start()
+        public async Task Start()
         {
             timer.Start();
 
             sections[sectionIndex].State = SectionState.Active;
+
+            await statService.Add(ActionType.Start, sections[sectionIndex].Type);
         }
 
-        public void Skip()
+        public async Task Pause()
         {
             timer.Stop();
+
+            await statService.Add(ActionType.Pause, sections[sectionIndex].Type);
+        }
+
+        public async Task Skip()
+        {
+            timer.Stop();
+
+            await statService.Add(ActionType.Skip, sections[sectionIndex].Type);
 
             if (sectionIndex < sections.Length - 1)
             {
@@ -54,33 +75,32 @@ namespace PomodoroTimer
             elapsed = TimeSpan.Zero;
         }
 
-        public void Pause()
-        {
-            timer.Stop();
-        }
-
-        public void Reset()
+        public async Task Reset()
         {
             timer.Stop();
 
             foreach (var section in sections)
                 section.State = SectionState.Inactive;
 
+            await statService.Add(ActionType.Reset, sections[sectionIndex].Type);
+
             sectionIndex = 0;
             elapsed = TimeSpan.Zero;
         }
 
-        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        private async void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             elapsed += TimeSpan.FromSeconds(1);
 
-            Progress?.Invoke();
+            if (Progress is not null)
+                await Progress.Invoke();
 
             if (elapsed == sections[sectionIndex].Time)
             {
-                Skip();
+                await Skip();
 
-                EndInterval?.Invoke();
+                if (EndInterval is not null)
+                    await EndInterval.Invoke();
             }
         }
 

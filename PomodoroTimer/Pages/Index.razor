@@ -1,3 +1,26 @@
 ﻿@page "/"
 
-<Pomodoro />
+@if (IsAuthorized)
+{
+    <a class="mr-5 p-1 rounded-lg hover:bg-gray-200" href="/" @onclick="ChangeState">User</a>
+    <Pomodoro />
+}
+else
+{
+    <div class="h-full flex flex-col justify-center items-center">
+        <div class="flex flex-row items-baseline">
+            <NavLink class="p-1 rounded-lg text-5xl text-gray-900 dark:text-gray-300 hover:underline" href="login" @onclick="ChangeState">Log in</NavLink>
+            <span class="mx-1 text-5xl text-gray-900 dark:text-gray-300">/</span>
+            <NavLink class="p-1 rounded-lg text-5xl text-gray-900 dark:text-gray-300 hover:underline" href="register" @onclick="ChangeState">Sign in</NavLink>
+        </div>
+    </div>
+}
+
+@code {
+    private bool IsAuthorized;
+
+    private void ChangeState()
+    {
+        IsAuthorized = !IsAuthorized;
+    }
+}

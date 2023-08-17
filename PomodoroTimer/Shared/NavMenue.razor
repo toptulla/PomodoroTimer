@@ -1,0 +1,26 @@
+<div class="flex items-baseline ml-5">
+    <a class="p-1 text-indigo-500 text-lg font-bold" href="/">Quiz</a>
+    <a class="mx-5 text-gray-700 font-medium p-1 rounded-lg hover:bg-gray-200" href="/">Create set</a>
+</div>
+
+@if (IsAuthorized)
+{
+    <a class="mr-5 p-1 rounded-lg hover:bg-gray-200" href="/" @onclick="ChangeState">User</a>
+}
+else
+{
+    <div class="flex items-baseline mr-5">
+        <NavLink class="p-1 rounded-lg hover:bg-gray-200" href="login" @onclick="ChangeState">Log in</NavLink>
+        <span class="mx-1">/</span>
+        <NavLink class="p-1 rounded-lg hover:bg-gray-200" href="register" @onclick="ChangeState">Sign in</NavLink>
+    </div>
+}
+
+@code {
+    private bool IsAuthorized;
+
+    private void ChangeState()
+    {
+        IsAuthorized = !IsAuthorized;
+    }
+}
